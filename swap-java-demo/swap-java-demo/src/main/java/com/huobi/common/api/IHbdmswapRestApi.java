@@ -279,4 +279,7 @@ public interface IHbdmswapRestApi {
 	public String futureContractHisorders(String symbol, String tradeType, String type, String status,
 			String createDate, String pageIndex, String pageSize) throws HttpException, IOException;
 
+	String futureFundingRate(String contractCode);
+	String futureHistoricalFundingRate(String contractCode,  String pageIndex, String pageSize);
+
 }

@@ -63,6 +63,10 @@ public class HbdmswapRestApiV1 implements IHbdmswapRestApi {
 	public static final String HUOBI_CONTRACE_CODE = "/swap-api/v1/swap_open_interest";
 	public static final String HUOBI_CONTRACE_OPENORDERS = "/swap-api/v1/swap_openorders";
 
+	// 资金费率相关
+	public static final String HUOBI_FUTURE_SWAP_FUNDING_RATE = "/swap-api/v1/swap_funding_rate";
+	public static final String HUOBI_FUTURE_SWAP_HISTORICAL_FUNDING_RATE = "/swap-api/v1/swap_historical_funding_rate";
+
 	@Override
 	public String futureContractInfo(String contractCode) {
 		Map<String, String> params = new HashMap<>();
@@ -350,4 +354,30 @@ public class HbdmswapRestApiV1 implements IHbdmswapRestApi {
 				url_prex + HUOBI_FUTURE_CONTRACT_HISORDERS, params, new HashMap<>());
 		return res;
 	}
+
+	@Override
+    public String futureFundingRate(String contractCode) {
+        Map<String, String> params = new HashMap<>();
+        if (!StringUtils.isEmpty(contractCode)) {
+            params.put("contract_code", contractCode);
+        }
+        String contractinfoRes = HbdmHttpClient.getInstance().doGet(url_prex + HUOBI_FUTURE_SWAP_FUNDING_RATE, params);
+        return contractinfoRes;
+    }
+
+    @Override
+    public String futureHistoricalFundingRate(String contractCode, String pageIndex, String pageSize) {
+        Map<String, String> params = new HashMap<>();
+        if (!StringUtils.isEmpty(contractCode)) {
+            params.put("contract_code", contractCode);
+        }
+        if (!StringUtils.isEmpty(pageIndex)) {
+            params.put("page_index", pageIndex);
+        }
+        if (!StringUtils.isEmpty(pageSize)) {
+            params.put("page_size", pageSize);
+        }
+        String contractinfoRes = HbdmHttpClient.getInstance().doGet(url_prex + HUOBI_FUTURE_SWAP_HISTORICAL_FUNDING_RATE, params);
+        return contractinfoRes;
+    }
 }
